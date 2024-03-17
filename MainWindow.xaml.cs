@@ -17,19 +17,15 @@ namespace CourseWork
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
-        private static List<Visitor> _visitors;
-        private static List<Exhibit> _exhibits;
-        
+    {        
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
-        private void datePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Годов Дмитрий 22ВП1\nТема: Музей");
         }
     }
 }
