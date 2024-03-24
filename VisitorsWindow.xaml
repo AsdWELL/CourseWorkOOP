@@ -1,0 +1,27 @@
+﻿<Window x:Class="CourseWork.VisitorsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWork"
+        mc:Ignorable="d"
+        Title="Учёт посетителей" WindowStartupLocation="CenterScreen" Style="{StaticResource DefaultWindow}" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" FontSize="14" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn FontSize="14" Header="№" Width="1*" CanUserResize="False" Binding="{Binding Number}"/>
+                <DataGridTextColumn FontSize="14" Header="Имя" Width="3*" CanUserResize="False" Binding="{Binding Name}"/>
+                <DataGridTextColumn FontSize="14" Header="Фамилия" Width="3*" CanUserResize="False" Binding="{Binding Surname}"/>
+                <DataGridTextColumn FontSize="14" Header="Дата посещения" Width="2*" CanUserResize="False" Binding="{Binding VisitDate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

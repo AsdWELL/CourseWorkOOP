@@ -5,10 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
-        Title="Музей" Height="450" Width="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
-    <Window.Resources>
-        <ResourceDictionary Source="Styles/MainWindowStyles.xaml"/>
-    </Window.Resources>
+        Title="Музей" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Style="{StaticResource DefaultWindow}">
     <Grid HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="{Binding Width, ElementName=window}" Height="{Binding Height, ElementName=window}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -17,7 +14,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="ExhibitsBtn" Content="Список экспонатов" Grid.Column="0"></Button>
-        <Button x:Name="VisitorsBtn" Content="Список посетителей" Grid.Column="1"></Button>
+        <Button x:Name="ExhibitsBtn" Content="Список экспонатов" Grid.Column="0" Grid.Row="0" Click="ExhibitsBtn_Click"></Button>
+        <Button x:Name="VisitorsBtn" Content="Список посетителей" Grid.Column="1" Grid.Row="0" Click="VisitorsBtn_Click"></Button>
     </Grid>
 </Window>
