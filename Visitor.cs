@@ -11,6 +11,7 @@ namespace CourseWork
     public class Visitor
     {
         private string _name;
+
         /// <summary>
         /// Имя посетителя
         /// </summary>
@@ -19,7 +20,7 @@ namespace CourseWork
             get => _name;
             set
             {
-                if (value.Length == 0)
+                if (value == null || value.Length == 0)
                     throw new EmptyArgumentException("Имя");
                 if (value.Any(char.IsNumber))
                     throw new NumberInParamException("Имя");
@@ -28,6 +29,7 @@ namespace CourseWork
         }
 
         private string _surname;
+
         /// <summary>
         /// Фамилия посетителя
         /// </summary>
@@ -36,7 +38,7 @@ namespace CourseWork
             get => _surname;
             set
             {
-                if (value.Length == 0)
+                if (value == null || value.Length == 0)
                     throw new EmptyArgumentException("Фамилия");
                 if (value.Any(char.IsNumber))
                     throw new NumberInParamException("Фамилия");
@@ -45,6 +47,7 @@ namespace CourseWork
         }
 
         private DateTime _visitDate;
+
         /// <summary>
         /// Дата последнего посещения
         /// </summary>
@@ -55,7 +58,7 @@ namespace CourseWork
             {
                 if (value > DateTime.Now)
                     throw new InvalidDateException();
-                _visitDate = value;
+                _visitDate = (DateTime)value;
             }
         }
 

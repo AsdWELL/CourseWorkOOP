@@ -29,21 +29,28 @@ namespace CourseWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _visitors = [];
-            FillDataGrid();
+            _visitors.OnAdd += v => AddNewVisitorToDataGrid(v, _visitors.Count);
+
+            FillDataGrid(_visitors);
         }
 
-        private void FillDataGrid()
+        private void AddNewVisitorToDataGrid(Visitor visitor, int index)
         {
-            if (_visitors.Count == 0)
+            VisitorsDataGrid.Items.Add(new
+            {
+                Number = index,
+                visitor.Name,
+                visitor.Surname,
+                VisitDate = visitor.VisitDate.ToString("d")
+            });
+        }
+
+        private void FillDataGrid(VisitorList visitors)
+        {
+            if (visitors.Count == 0)
                 return;
-            for (int i = 0; i < _visitors.Count; i++)
-                VisitorsDataGrid.Items.Add(new 
-                {
-                    Number = i + 1,
-                    _visitors[i].Name,
-                    _visitors[i].Surname,
-                    VisitDate = _visitors[i].VisitDate.ToString("d") 
-                });
+            for (int i = 0; i < visitors.Count; i++)
+                AddNewVisitorToDataGrid(_visitors[i], i + 1);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -59,6 +66,14 @@ namespace CourseWork
             _visitors.SaveToJson();
             e.Cancel = true;
             Hide();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            CreateVisitorWindow visitorWindow = new CreateVisitorWindow();
+            bool? result = visitorWindow.ShowDialog();
+            if (result == true)
+                _visitors.Add(visitorWindow.NewVisitor);
         }
     }
 }

@@ -6,8 +6,12 @@ using System.Windows.Automation.Peers;
 
 namespace CourseWork
 {
+    public delegate void OnAdd<T>(T item);
+
     public abstract class JsonSerializableList<T> : List<T>
     {
+        public event OnAdd<T> OnAdd;
+        
         protected string path;
 
         protected JsonSerializableList(string path) : base()
@@ -36,6 +40,12 @@ namespace CourseWork
                 json = Encoding.Default.GetString(buffer);
             }
             AddRange(JsonSerializer.Deserialize<List<T>>(json));
+        }
+
+        public new void Add(T item)
+        {
+            base.Add(item);
+            OnAdd?.Invoke(item);
         }
     }
 }

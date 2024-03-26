@@ -12,9 +12,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" FontSize="14" IsReadOnly="True">
+        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn FontSize="14" Header="№" Width="1*" CanUserResize="False" Binding="{Binding Number}"/>
                 <DataGridTextColumn FontSize="14" Header="Имя" Width="3*" CanUserResize="False" Binding="{Binding Name}"/>
@@ -22,6 +23,6 @@
                 <DataGridTextColumn FontSize="14" Header="Дата посещения" Width="2*" CanUserResize="False" Binding="{Binding VisitDate}"/>
             </DataGrid.Columns>
         </DataGrid>
-
+        <Button Content="Добавить посетителя" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" Click="Button_Click"/>
     </Grid>
 </Window>
