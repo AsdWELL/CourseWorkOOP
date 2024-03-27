@@ -20,7 +20,7 @@ namespace CourseWork
             get => _name;
             set
             {
-                if (value == null || value.Length == 0)
+                if (string.IsNullOrEmpty(value))
                     throw new EmptyArgumentException("Имя");
                 if (value.Any(char.IsNumber))
                     throw new NumberInParamException("Имя");
@@ -38,7 +38,7 @@ namespace CourseWork
             get => _surname;
             set
             {
-                if (value == null || value.Length == 0)
+                if (string.IsNullOrEmpty(value))
                     throw new EmptyArgumentException("Фамилия");
                 if (value.Any(char.IsNumber))
                     throw new NumberInParamException("Фамилия");

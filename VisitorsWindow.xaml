@@ -12,17 +12,23 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" IsReadOnly="True">
+        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <DataGrid.Columns>
-                <DataGridTextColumn FontSize="14" Header="№" Width="1*" CanUserResize="False" Binding="{Binding Number}"/>
                 <DataGridTextColumn FontSize="14" Header="Имя" Width="3*" CanUserResize="False" Binding="{Binding Name}"/>
                 <DataGridTextColumn FontSize="14" Header="Фамилия" Width="3*" CanUserResize="False" Binding="{Binding Surname}"/>
-                <DataGridTextColumn FontSize="14" Header="Дата посещения" Width="2*" CanUserResize="False" Binding="{Binding VisitDate}"/>
+                <DataGridTextColumn FontSize="14" Header="Дата посещения" Width="3*" CanUserResize="False" Binding="{Binding VisitDate, StringFormat=d}"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Отменить выделение" Click="UnselectAll"/>
+                    <MenuItem Header="Удалить выбранные" Click="DeleteSelectedBtn_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
-        <Button Content="Добавить посетителя" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" Click="Button_Click"/>
+        <Button x:Name="AddNewVisitorBtn" Content="Добавить посетителя" Grid.Row="1" Grid.Column="2" Click="AddNewVisitorBtn_Click"/>
     </Grid>
 </Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
-        Title="Новый посетитель" Width="300" Height="300" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Новый посетитель" Width="300" Height="300" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" KeyDown="Window_KeyDown" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

@@ -18,7 +18,7 @@ namespace CourseWork
             get => _title;
             set
             {
-                if (value.Length == 0)
+                if (string.IsNullOrEmpty(value))
                     throw new EmptyArgumentException("Название экспоната");
                 _title = value;
             }
@@ -33,7 +33,7 @@ namespace CourseWork
             get => _description;
             set
             {
-                if (value.Length == 0)
+                if (string.IsNullOrEmpty(value))
                     throw new EmptyArgumentException("Описание экспоната");
                 _description = value;
             }
@@ -48,7 +48,7 @@ namespace CourseWork
             get => _epoch;
             set
             {
-                if (value.Length == 0)
+                if (string.IsNullOrEmpty(value))
                     _epoch = "Неизвестно";
                 _epoch = value;
             }

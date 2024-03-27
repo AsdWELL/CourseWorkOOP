@@ -54,5 +54,13 @@ namespace CourseWork
             NewVisitor = newVisitor;
             DialogResult = true;
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                SaveVisitorBtn_Click(sender, e);
+            else if (e.Key == Key.Escape)
+                CancelBtn_Click(sender, e);
+        }
     }
 }

@@ -29,28 +29,16 @@ namespace CourseWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _visitors = [];
-            _visitors.OnAdd += v => AddNewVisitorToDataGrid(v, _visitors.Count);
+            _visitors.OnAdd += v => VisitorsDataGrid.Items.Add(v);
+            _visitors.OnRemove += VisitorsDataGrid.Items.RemoveAt;
 
             FillDataGrid(_visitors);
         }
 
-        private void AddNewVisitorToDataGrid(Visitor visitor, int index)
-        {
-            VisitorsDataGrid.Items.Add(new
-            {
-                Number = index,
-                visitor.Name,
-                visitor.Surname,
-                VisitDate = visitor.VisitDate.ToString("d")
-            });
-        }
-
         private void FillDataGrid(VisitorList visitors)
         {
-            if (visitors.Count == 0)
-                return;
             for (int i = 0; i < visitors.Count; i++)
-                AddNewVisitorToDataGrid(_visitors[i], i + 1);
+                VisitorsDataGrid.Items.Add(_visitors[i]);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -68,12 +56,23 @@ namespace CourseWork
             Hide();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddNewVisitorBtn_Click(object sender, RoutedEventArgs e)
         {
             CreateVisitorWindow visitorWindow = new CreateVisitorWindow();
             bool? result = visitorWindow.ShowDialog();
             if (result == true)
                 _visitors.Add(visitorWindow.NewVisitor);
+        }
+
+        private void DeleteSelectedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            while (VisitorsDataGrid.SelectedItems.Count > 0)
+                _visitors.RemoveAt(VisitorsDataGrid.SelectedIndex);
+        }
+
+        private void UnselectAll(object sender, RoutedEventArgs e)
+        {
+            VisitorsDataGrid.UnselectAll();
         }
     }
 }

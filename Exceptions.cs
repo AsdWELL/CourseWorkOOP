@@ -25,4 +25,9 @@ namespace CourseWork
     {
         public NegativePriceException() : base("Цена экспоната не может быть отрицательной") { }
     }
+
+    public class ItemNotInCollectionException : Exception
+    {
+        public ItemNotInCollectionException() : base("В коллекции нет указанного элемента") { }
+    }
 }
