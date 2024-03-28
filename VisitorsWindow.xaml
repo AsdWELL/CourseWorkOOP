@@ -8,15 +8,16 @@
         Title="Учёт посетителей" WindowStartupLocation="CenterScreen" Style="{StaticResource DefaultWindow}" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" SelectionChanged="VisitorsDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn FontSize="14" Header="Имя" Width="3*" CanUserResize="False" Binding="{Binding Name}"/>
                 <DataGridTextColumn FontSize="14" Header="Фамилия" Width="3*" CanUserResize="False" Binding="{Binding Surname}"/>
@@ -24,11 +25,28 @@
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Отменить выделение" Click="UnselectAll"/>
-                    <MenuItem Header="Удалить выбранные" Click="DeleteSelectedBtn_Click"/>
+                    <MenuItem x:Name="AddNewVisitorBtn" Header="Добавить посетителя" Click="AddNewVisitorBtn_Click"/>
+                    <MenuItem x:Name="EditVisitorBtn" Header="Отредактировать данные" Click="EditVisitorBtn_Click"/>
+                    <MenuItem Name="UnselectBtn" Header="Отменить выделение" Click="UnselectAll_Click"/>
+                    <MenuItem x:Name="DeleteSelectedBtn" Header="Удалить выбранных" Click="DeleteSelectedBtn_Click" IsEnabled="False"/>
+                    <MenuItem Name="DeleteAllVisitors" Header="Удалить всех" Click="DeleteAllVisitors_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Button x:Name="AddNewVisitorBtn" Content="Добавить посетителя" Grid.Row="1" Grid.Column="2" Click="AddNewVisitorBtn_Click"/>
+        <Label Content="Найти посетителей по значению критерия" Grid.Row="1" Grid.ColumnSpan="2" ></Label>
+        <Label Content="Критерий" Grid.Row="2" Grid.Column="0"></Label>
+        <ComboBox x:Name="SearchFieldComboBox" Grid.Row="3" Grid.Column="0">
+            <ComboBoxItem x:Name="comboBoxItem">
+                <Label Content="Имя"></Label>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Фамилия"></Label>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Дата посещения"></Label>
+            </ComboBoxItem>
+        </ComboBox>
+        <Label Content="Значение" Grid.Row="2" Grid.Column="1"></Label>
+        <TextBox x:Name="SearchValueTextBox" Grid.Row="3" Grid.Column="1"></TextBox>
     </Grid>
 </Window>

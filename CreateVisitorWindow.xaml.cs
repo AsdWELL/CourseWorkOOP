@@ -27,9 +27,21 @@ namespace CourseWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             VisitorVisitDate.SelectedDate = DateTime.Now;
+            if (NewVisitor != null)
+            {
+                VisitorNameTextBox.Text = NewVisitor.Name;
+                VisitorSurnameTextBox.Text = NewVisitor.Surname;
+                VisitorVisitDate.SelectedDate = NewVisitor.VisitDate;
+            }
         }
 
         public Visitor NewVisitor { get; private set; }
+
+        public bool? ShowDialog(Visitor visitor)
+        {
+            NewVisitor = visitor;
+            return ShowDialog();
+        }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {

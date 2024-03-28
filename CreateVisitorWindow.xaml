@@ -23,7 +23,7 @@
         <Label Content="Фамилия посетителя" Grid.Row="1" Grid.Column="0"/>
         <TextBox x:Name="VisitorSurnameTextBox" Grid.Row="1" Grid.Column="1" Width="130"/>
         <Label Content="Дата посещения" Grid.Row="2" Grid.Column="0"/>
-        <DatePicker x:Name="VisitorVisitDate" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="130" Height="50"/>
+        <DatePicker x:Name="VisitorVisitDate" Grid.Row="2" Grid.Column="1" Width="130" Height="50"/>
         <Button x:Name="CancelBtn" Content="Отмена" Grid.Row="3" Grid.Column="0" Width="120" Height="30" Click="CancelBtn_Click"/>
         <Button x:Name="SaveVisitorBtn" Content="Сохранить" Grid.Row="3" Grid.Column="1" Width="120" Height="30" Click="SaveVisitorBtn_Click"/>
     </Grid>

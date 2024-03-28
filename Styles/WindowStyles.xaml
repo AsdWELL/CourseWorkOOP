@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultWindow" TargetType="Window">
         <Setter Property="ResizeMode" Value="NoResize"/>
-        <Setter Property="Width" Value="800"/>
+        <Setter Property="Width" Value="600"/>
         <Setter Property="Height" Value="450"/>
     </Style>
 
@@ -20,11 +20,18 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <Style TargetType="DatePicker">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
     <Style TargetType="TextBox">
+        <Setter Property="Width" Value="200"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Padding" Value="2.5"/>
     </Style>
 
     <Style TargetType="DataGrid">
@@ -34,5 +41,19 @@
         <Setter Property="CanUserResizeRows" Value="False"/>
         <Setter Property="CanUserAddRows" Value="False"/>
         <Setter Property="CanUserDeleteRows" Value="False"/>
+    </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="SelectedIndex" Value="0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Width" Value="200"/>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="{Binding Width, ElementName=SearchFieldComboBox}"/>
     </Style>
 </ResourceDictionary>
