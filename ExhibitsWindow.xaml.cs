@@ -29,6 +29,7 @@ namespace CourseWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _exhibits = [];
+            _exhibits.ReadFromJson();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

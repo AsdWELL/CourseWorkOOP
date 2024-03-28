@@ -39,6 +39,7 @@ namespace CourseWork
 
         public bool? ShowDialog(Visitor visitor)
         {
+            Title = "Редактирование посетителя";
             NewVisitor = visitor;
             return ShowDialog();
         }
@@ -50,21 +51,18 @@ namespace CourseWork
 
         private void SaveVisitorBtn_Click(object sender, RoutedEventArgs e)
         {
-            Visitor newVisitor;
-            try
-            {
-                newVisitor = new Visitor(
+            NewVisitor = new Visitor(
                 VisitorNameTextBox.Text,
                 VisitorSurnameTextBox.Text,
                 (DateTime)VisitorVisitDate.SelectedDate);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Внимание");
-                return;
-            }
-            NewVisitor = newVisitor;
+
             DialogResult = true;
+        }
+
+        private void CheckInput(object sender, TextChangedEventArgs e)
+        {
+            SaveVisitorBtn.IsEnabled = !string.IsNullOrWhiteSpace(VisitorNameTextBox.Text)
+                && !string.IsNullOrWhiteSpace(VisitorSurnameTextBox.Text);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

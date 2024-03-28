@@ -29,6 +29,7 @@ namespace CourseWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _visitors = [];
+            _visitors.ReadFromJson();
             _visitors.OnAdd += v => VisitorsDataGrid.Items.Add(v);
             _visitors.OnRemove += VisitorsDataGrid.Items.RemoveAt;
             _visitors.OnChange += (i, v) => VisitorsDataGrid.Items[i] = v;
@@ -38,8 +39,9 @@ namespace CourseWork
 
         private void FillDataGrid(VisitorList visitors)
         {
+            VisitorsDataGrid.Items.Clear();
             for (int i = 0; i < visitors.Count; i++)
-                VisitorsDataGrid.Items.Add(_visitors[i]);
+                VisitorsDataGrid.Items.Add(visitors[i]);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -120,6 +122,33 @@ namespace CourseWork
         {
             _visitors.Clear();
             VisitorsDataGrid.Items.Clear();
+        }
+
+        private void SearchVisitorsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VisitorList visitors = _visitors.FindVisitorsByFieldValue(
+                (VisitorFields)SearchFieldComboBox.SelectedIndex,
+                SearchValueTextBox.Text);
+
+            if (visitors.Count == 0)
+            {
+                MessageBox.Show("Не найдено ни одного посетителя", "Результат");
+                return;
+            }
+
+            FillDataGrid(visitors);
+        }
+
+        private void CanselSearchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SearchValueTextBox.Clear();
+            FillDataGrid(_visitors);
+        }
+
+
+        private void SearchValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchVisitorsBtn.IsEnabled = !string.IsNullOrWhiteSpace(SearchValueTextBox.Text);
         }
     }
 }

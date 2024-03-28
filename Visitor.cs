@@ -8,8 +8,15 @@ using System.Windows.Controls;
 
 namespace CourseWork
 {
-    public class Visitor
+    public enum VisitorFields
     {
+        Name,
+        Surname,
+        VisitDate
+    }
+
+    public class Visitor
+    { 
         private string _name;
 
         /// <summary>
@@ -67,6 +74,17 @@ namespace CourseWork
             Name = name;
             Surname = surname;
             VisitDate = visitDate;
+        }
+
+        public bool IsFieldEqulsValue(VisitorFields field, string value)
+        {
+            string fieldValue = field switch
+            {
+                VisitorFields.Name => Name,
+                VisitorFields.Surname => Surname,
+                VisitorFields.VisitDate => VisitDate.ToString("d")
+            };
+            return fieldValue.ToLower().Equals(value.ToLower());
         }
 
         public override string ToString()

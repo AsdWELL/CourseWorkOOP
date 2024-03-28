@@ -8,7 +8,7 @@
 
     <Style TargetType="Button">
         <Setter Property="Width" Value="200"/>
-        <Setter Property="Height" Value="50"/>
+        <Setter Property="Height" Value="40"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>

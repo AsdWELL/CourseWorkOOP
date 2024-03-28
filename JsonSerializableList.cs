@@ -46,7 +46,6 @@ namespace CourseWork
         public JsonSerializableList(string path) : base()
         {
             this.path = path;
-            ReadFromJson();
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace CourseWork
             }
         }
 
-        private void ReadFromJson()
+        public void ReadFromJson()
         {
             string json;
             using (FileStream fstream = new FileStream(path, FileMode.OpenOrCreate))
