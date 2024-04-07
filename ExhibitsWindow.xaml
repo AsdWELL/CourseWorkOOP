@@ -6,7 +6,55 @@
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
         Title="Учёт экспонатов" WindowStartupLocation="CenterScreen" Style="{StaticResource DefaultWindow}" Loaded="Window_Loaded" Closing="Window_Closing">
-    <Grid>
-        
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="ExhibitsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" SelectionChanged="ExhibitsDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Название" Width="1*" CanUserResize="False" Binding="{Binding Title}"/>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Описание" Width="1*" CanUserResize="False" Binding="{Binding Description}">
+                </DataGridTextColumn>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Эпоха" Width="1*" CanUserResize="False" Binding="{Binding Epoch}"/>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Цена" Width="1*" CanUserResize="False" Binding="{Binding Price, StringFormat=C}"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="AddNewExhibitBtn" Header="Добавить экспонат" Click="AddNewExhibitBtn_Click"/>
+                    <MenuItem x:Name="EditExhibitBtn" Header="Отредактировать данные" Click="EditExhibitBtn_Click"/>
+                    <MenuItem Name="UnselectBtn" Header="Отменить выделение" Click="UnselectAll_Click"/>
+                    <MenuItem x:Name="DeleteSelectedBtn" Header="Удалить выбранных" Click="DeleteSelectedBtn_Click" IsEnabled="False"/>
+                    <MenuItem Name="DeleteAllExhibits" Header="Удалить всех" Click="DeleteAllExhibits_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Label Content="Найти экспонаты по значению критерия" Grid.Row="1" Grid.ColumnSpan="2" ></Label>
+        <ComboBox x:Name="SearchFieldComboBox" Grid.Row="2" Grid.Column="0">
+            <ComboBoxItem>
+                <Label Content="Название"></Label>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Описание"></Label>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Эпоха"></Label>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Цена"></Label>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Все критерии"></Label>
+            </ComboBoxItem>
+        </ComboBox>
+        <TextBox x:Name="SearchValueTextBox" Grid.Row="2" Grid.Column="1" TextChanged="SearchValueTextBox_TextChanged"></TextBox>
+        <Button x:Name="CancelSearchBtn" Content="Отменить поиск" Grid.Row="3" Grid.Column="0" Click="CancelSearchBtn_Click"></Button>
+        <Button x:Name="SearchExhibitsBtn" Content="Выполнить поиск" Grid.Row="3" Grid.Column="1" Click="SearchExhibitsBtn_Click" IsEnabled="False"></Button>
     </Grid>
 </Window>

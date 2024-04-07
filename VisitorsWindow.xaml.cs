@@ -128,7 +128,7 @@ namespace CourseWork
                 MessageBox.Show("Не найдено ни одного посетителя", "Внмиание");
         }
 
-        private void CanselSearchBtn_Click(object sender, RoutedEventArgs e)
+        private void CancelSearchBtn_Click(object sender, RoutedEventArgs e)
         {
             SearchValueTextBox.Clear();
             VisitorsDataGrid.Items.Filter = null;

@@ -19,9 +19,9 @@
         </Grid.ColumnDefinitions>
         <DataGrid x:Name="VisitorsDataGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" SelectionChanged="VisitorsDataGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn FontSize="14" Header="Имя" Width="1*" CanUserResize="False" Binding="{Binding Name}"/>
-                <DataGridTextColumn FontSize="14" Header="Фамилия" Width="1*" CanUserResize="False" Binding="{Binding Surname}"/>
-                <DataGridTextColumn FontSize="14" Header="Дата посещения" Width="1*" CanUserResize="False" Binding="{Binding VisitDate, StringFormat=dd.MM.yyyy}"/>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Имя" Width="1*" CanUserResize="False" Binding="{Binding Name}"/>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Фамилия" Width="1*" CanUserResize="False" Binding="{Binding Surname}"/>
+                <DataGridTextColumn ElementStyle="{StaticResource WrappedColumn}" FontSize="14" Header="Дата посещения" Width="1*" CanUserResize="False" Binding="{Binding VisitDate, StringFormat=dd.MM.yyyy}"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
@@ -35,7 +35,7 @@
         </DataGrid>
         <Label Content="Найти посетителей по значению критерия" Grid.Row="1" Grid.ColumnSpan="2" ></Label>
         <ComboBox x:Name="SearchFieldComboBox" Grid.Row="2" Grid.Column="0">
-            <ComboBoxItem x:Name="comboBoxItem">
+            <ComboBoxItem>
                 <Label Content="Имя"></Label>
             </ComboBoxItem>
             <ComboBoxItem>
@@ -49,7 +49,7 @@
             </ComboBoxItem>
         </ComboBox>
         <TextBox x:Name="SearchValueTextBox" Grid.Row="2" Grid.Column="1" TextChanged="SearchValueTextBox_TextChanged"></TextBox>
-        <Button x:Name="CanselSearchBtn" Content="Отменить поиск" Grid.Row="3" Grid.Column="0" Click="CanselSearchBtn_Click"></Button>
+        <Button x:Name="CancelSearchBtn" Content="Отменить поиск" Grid.Row="3" Grid.Column="0" Click="CancelSearchBtn_Click"></Button>
         <Button x:Name="SearchVisitorsBtn" Content="Выполнить поиск" Grid.Row="3" Grid.Column="1" Click="SearchVisitorsBtn_Click" IsEnabled="False"></Button>
     </Grid>
 </Window>

@@ -4,9 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using System.Xml.Linq;
 
 namespace CourseWork
 {
+    public enum ExhibitFields
+    {
+        Title,
+        Description,
+        Epoch,
+        Price,
+        Any
+    }
+    
     public class Exhibit
     {
         public int Id {  get; set; }
@@ -77,6 +87,29 @@ namespace CourseWork
             Description = description;
             Epoch = epoch;
             Price = price;
+        }
+
+        public bool IsFieldEqulsValue(ExhibitFields field, string value)
+        {
+            value = value.ToLower();
+
+            if (field == ExhibitFields.Price)
+                return Price.ToString().Equals(value);
+
+            if (field == ExhibitFields.Any)
+                return Title.ToLower().Contains(value) ||
+                    Description.ToLower().Contains(value) ||
+                    Epoch.ToLower().Contains(value) ||
+                    Price.ToString().Equals(value);
+
+            string fieldValue = field switch
+            {
+                ExhibitFields.Title => Title,
+                ExhibitFields.Description => Description,
+                ExhibitFields.Epoch => Epoch,
+            };
+
+            return fieldValue.ToLower().Contains(value);
         }
 
         public override string ToString()
