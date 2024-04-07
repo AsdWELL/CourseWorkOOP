@@ -26,13 +26,14 @@ namespace CourseWork
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            VisitorVisitDate.SelectedDate = DateTime.Now;
             if (NewVisitor != null)
             {
                 VisitorNameTextBox.Text = NewVisitor.Name;
                 VisitorSurnameTextBox.Text = NewVisitor.Surname;
                 VisitorVisitDate.SelectedDate = NewVisitor.VisitDate;
             }
+            else
+                VisitorVisitDate.SelectedDate = DateTime.Now;
         }
 
         public Visitor NewVisitor { get; private set; }
@@ -51,10 +52,18 @@ namespace CourseWork
 
         private void SaveVisitorBtn_Click(object sender, RoutedEventArgs e)
         {
-            NewVisitor = new Visitor(
-                VisitorNameTextBox.Text,
-                VisitorSurnameTextBox.Text,
-                (DateTime)VisitorVisitDate.SelectedDate);
+            try
+            {
+                NewVisitor = new Visitor(
+                    VisitorNameTextBox.Text,
+                    VisitorSurnameTextBox.Text,
+                    (DateTime)VisitorVisitDate.SelectedDate);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Внимание");
+                return;
+            }
 
             DialogResult = true;
         }

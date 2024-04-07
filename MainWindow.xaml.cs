@@ -1,15 +1,4 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.Json;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace CourseWork
 {
@@ -20,10 +9,13 @@ namespace CourseWork
     {
         private static ExhibitsWindow _exhibitsWindow;
         private static VisitorsWindow _visitorsWindow;
-        
+
+        public static MuseumContext _museumContext;
+
         public MainWindow()
         {
             InitializeComponent();
+            _museumContext = new MuseumContext();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -33,6 +25,8 @@ namespace CourseWork
             _exhibitsWindow.Owner = this;
             _visitorsWindow = new VisitorsWindow();
             _visitorsWindow.Owner = this;
+
+            _museumContext.Database.EnsureCreated();
         }
 
         private void ExhibitsBtn_Click(object sender, RoutedEventArgs e)
@@ -45,6 +39,11 @@ namespace CourseWork
         {
             _visitorsWindow.Show();
             Hide();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _museumContext.SaveChanges();
         }
     }
 }

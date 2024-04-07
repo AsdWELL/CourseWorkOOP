@@ -44,6 +44,9 @@
             <ComboBoxItem>
                 <Label Content="Дата посещения"></Label>
             </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Все критерии"></Label>
+            </ComboBoxItem>
         </ComboBox>
         <TextBox x:Name="SearchValueTextBox" Grid.Row="2" Grid.Column="1" TextChanged="SearchValueTextBox_TextChanged"></TextBox>
         <Button x:Name="CanselSearchBtn" Content="Отменить поиск" Grid.Row="3" Grid.Column="0" Click="CanselSearchBtn_Click"></Button>

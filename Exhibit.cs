@@ -9,6 +9,8 @@ namespace CourseWork
 {
     public class Exhibit
     {
+        public int Id {  get; set; }
+        
         private string _title;
         /// <summary>
         /// Название экспоната

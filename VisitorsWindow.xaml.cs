@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using static CourseWork.MainWindow;
 
 namespace CourseWork
 {
@@ -18,9 +9,7 @@ namespace CourseWork
     /// Логика взаимодействия для VisitorsWindow.xaml
     /// </summary>
     public partial class VisitorsWindow : Window
-    {
-        private static VisitorList _visitors;
-        
+    {        
         public VisitorsWindow()
         {
             InitializeComponent();
@@ -28,20 +17,8 @@ namespace CourseWork
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _visitors = [];
-            _visitors.ReadFromJson();
-            _visitors.OnAdd += v => VisitorsDataGrid.Items.Add(v);
-            _visitors.OnRemove += VisitorsDataGrid.Items.RemoveAt;
-            _visitors.OnChange += (i, v) => VisitorsDataGrid.Items[i] = v;
-
-            FillDataGrid(_visitors);
-        }
-
-        private void FillDataGrid(VisitorList visitors)
-        {
-            VisitorsDataGrid.Items.Clear();
-            for (int i = 0; i < visitors.Count; i++)
-                VisitorsDataGrid.Items.Add(visitors[i]);
+            _museumContext.Visitors.Load();
+            VisitorsDataGrid.ItemsSource = _museumContext.Visitors.Local.ToObservableCollection();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -54,8 +31,6 @@ namespace CourseWork
             {
                 return;
             }
-
-            _visitors.SaveToJson();
             
             e.Cancel = true;
             Hide();
@@ -74,7 +49,10 @@ namespace CourseWork
             CreateVisitorWindow visitorWindow = new CreateVisitorWindow();
             bool? result = visitorWindow.ShowDialog();
             if (result == true)
-                _visitors.Add(visitorWindow.NewVisitor);
+            {
+                _museumContext.Visitors.Add(visitorWindow.NewVisitor);
+                _museumContext.SaveChanges();
+            }                
         }
 
         private void EditVisitorBtn_Click(object sender, RoutedEventArgs e)
@@ -85,18 +63,30 @@ namespace CourseWork
                 return;
             }
 
-            int selectedIndex = VisitorsDataGrid.SelectedIndex;
-            CreateVisitorWindow visitorWindow = new CreateVisitorWindow();
-            bool? result = visitorWindow.ShowDialog(_visitors[selectedIndex]);
-
+            Visitor selectedVisitor;
             try
             {
-                if (result == true)
-                    _visitors[selectedIndex] = visitorWindow.NewVisitor;
+                selectedVisitor = _museumContext.Visitors.ElementAt(VisitorsDataGrid.SelectedIndex);
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch
             {
-                MessageBox.Show(ex.Message, "Внимание");
+                MessageBox.Show("Произошла ошибка при выборе посетителя", "Внимание");
+                return;
+            }
+
+            CreateVisitorWindow visitorWindow = new CreateVisitorWindow();
+            bool? result = visitorWindow.ShowDialog(selectedVisitor);
+
+            if (result == true)
+            {
+                Visitor visitor = _museumContext.Visitors.Find(selectedVisitor.Id);
+
+                visitor.Name = visitorWindow.NewVisitor.Name;
+                visitor.Surname = visitorWindow.NewVisitor.Surname;
+                visitor.VisitDate = visitorWindow.NewVisitor.VisitDate;
+
+                _museumContext.SaveChanges();
+                VisitorsDataGrid.Items.Refresh();
             }
         }
 
@@ -105,11 +95,16 @@ namespace CourseWork
             try
             {
                 while (VisitorsDataGrid.SelectedItems.Count > 0)
-                    _visitors.RemoveAt(VisitorsDataGrid.SelectedIndex);
+                {
+                    _museumContext.Visitors.Remove(_museumContext.Visitors.ElementAt(VisitorsDataGrid.SelectedIndex));
+                    _museumContext.SaveChanges();
+                }
+                    
             }
-            catch (IndexOutOfRangeException ex)
+            catch
             {
-                MessageBox.Show(ex.Message, "Внимание");
+                MessageBox.Show("Произошла ошибка при удалении посетителя", "Внимание");
+                return;
             }
         }
 
@@ -120,29 +115,23 @@ namespace CourseWork
 
         private void DeleteAllVisitors_Click(object sender, RoutedEventArgs e)
         {
-            _visitors.Clear();
-            VisitorsDataGrid.Items.Clear();
+            _museumContext.Visitors.ExecuteDelete();
         }
 
         private void SearchVisitorsBtn_Click(object sender, RoutedEventArgs e)
         {
-            VisitorList visitors = _visitors.FindVisitorsByFieldValue(
-                (VisitorFields)SearchFieldComboBox.SelectedIndex,
+            VisitorsDataGrid.Items.Filter = v =>
+            (v as Visitor).IsFieldEqulsValue((VisitorFields)SearchFieldComboBox.SelectedIndex,
                 SearchValueTextBox.Text);
 
-            if (visitors.Count == 0)
-            {
-                MessageBox.Show("Не найдено ни одного посетителя", "Результат");
-                return;
-            }
-
-            FillDataGrid(visitors);
+            if (VisitorsDataGrid.Items.Count == 0)
+                MessageBox.Show("Не найдено ни одного посетителя", "Внмиание");
         }
 
         private void CanselSearchBtn_Click(object sender, RoutedEventArgs e)
         {
             SearchValueTextBox.Clear();
-            FillDataGrid(_visitors);
+            VisitorsDataGrid.Items.Filter = null;
         }
 
 

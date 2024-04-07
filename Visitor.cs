@@ -12,11 +12,14 @@ namespace CourseWork
     {
         Name,
         Surname,
-        VisitDate
+        VisitDate,
+        Any
     }
 
     public class Visitor
-    { 
+    {
+        public int Id { get; set; }
+        
         private string _name;
 
         /// <summary>
@@ -78,13 +81,19 @@ namespace CourseWork
 
         public bool IsFieldEqulsValue(VisitorFields field, string value)
         {
+            value = value.ToLower();
+            if (field == VisitorFields.Any)
+                return Name.ToLower() == value ||
+                    Surname.ToLower() == value ||
+                    VisitDate.ToString("d") == value;
+            
             string fieldValue = field switch
             {
                 VisitorFields.Name => Name,
                 VisitorFields.Surname => Surname,
                 VisitorFields.VisitDate => VisitDate.ToString("d")
             };
-            return fieldValue.ToLower().Equals(value.ToLower());
+            return fieldValue.ToLower().Equals(value);
         }
 
         public override string ToString()
