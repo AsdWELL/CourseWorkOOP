@@ -66,7 +66,7 @@ namespace CourseWork
             Visitor selectedVisitor;
             try
             {
-                selectedVisitor = _museumContext.Visitors.ElementAt(VisitorsDataGrid.SelectedIndex);
+                selectedVisitor = (Visitor)VisitorsDataGrid.SelectedItem;
             }
             catch
             {
@@ -79,7 +79,14 @@ namespace CourseWork
 
             if (result == true)
             {
-                Visitor visitor = _museumContext.Visitors.Find(selectedVisitor.Id);
+                Visitor? visitor = _museumContext.Visitors.Find(selectedVisitor.Id);
+
+                if (visitor == null)
+                {
+                    MessageBox.Show("Произошла ошибка при редактировании выбранного посетителя\n" +
+                        $"Пользователь {selectedVisitor.Name} не найден в базе данных", "Внимание");
+                    return;
+                }
 
                 visitor.Name = visitorWindow.NewVisitor.Name;
                 visitor.Surname = visitorWindow.NewVisitor.Surname;
@@ -96,7 +103,7 @@ namespace CourseWork
             {
                 while (VisitorsDataGrid.SelectedItems.Count > 0)
                 {
-                    _museumContext.Visitors.Remove(_museumContext.Visitors.ElementAt(VisitorsDataGrid.SelectedIndex));
+                    _museumContext.Visitors.Remove((Visitor)VisitorsDataGrid.SelectedItem);
                     _museumContext.SaveChanges();
                 }
                     
@@ -121,7 +128,7 @@ namespace CourseWork
         private void SearchVisitorsBtn_Click(object sender, RoutedEventArgs e)
         {
             VisitorsDataGrid.Items.Filter = v =>
-            (v as Visitor).IsFieldEqulsValue((VisitorFields)SearchFieldComboBox.SelectedIndex,
+            ((Visitor)v).IsFieldEqulsValue((VisitorFields)SearchFieldComboBox.SelectedIndex,
                 SearchValueTextBox.Text);
 
             if (VisitorsDataGrid.Items.Count == 0)

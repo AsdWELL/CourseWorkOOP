@@ -66,7 +66,7 @@ namespace CourseWork
             Exhibit selectedExhibit;
             try
             {
-                selectedExhibit= _museumContext.Exhibits.ElementAt(ExhibitsDataGrid.SelectedIndex);
+                selectedExhibit = (Exhibit)ExhibitsDataGrid.SelectedItem;
             }
             catch
             {
@@ -79,7 +79,14 @@ namespace CourseWork
 
             if (result == true)
             {
-                Exhibit exhibit= _museumContext.Exhibits.Find(selectedExhibit.Id);
+                Exhibit? exhibit= _museumContext.Exhibits.Find(selectedExhibit.Id);
+                
+                if (exhibit == null)
+                {
+                    MessageBox.Show("Произошла ошибка при редактировании выбранного экспоната\n" +
+                        $"Экспонат {selectedExhibit.Title} не найден в базе данных", "Внимание");
+                    return;
+                }
 
                 exhibit.Title = exhibitWindow.NewExhibit.Title;
                 exhibit.Description = exhibitWindow.NewExhibit.Description;
@@ -97,7 +104,7 @@ namespace CourseWork
             {
                 while (ExhibitsDataGrid.SelectedItems.Count > 0)
                 {
-                    _museumContext.Exhibits.Remove(_museumContext.Exhibits.ElementAt(ExhibitsDataGrid.SelectedIndex));
+                    _museumContext.Exhibits.Remove((Exhibit)ExhibitsDataGrid.SelectedItem);
                     _museumContext.SaveChanges();
                 }
 
@@ -122,7 +129,7 @@ namespace CourseWork
         private void SearchExhibitsBtn_Click(object sender, RoutedEventArgs e)
         {
             ExhibitsDataGrid.Items.Filter = e =>
-            (e as Exhibit).IsFieldEqulsValue((ExhibitFields)SearchFieldComboBox.SelectedIndex,
+            ((Exhibit)e).IsFieldEqulsValue((ExhibitFields)SearchFieldComboBox.SelectedIndex,
                 SearchValueTextBox.Text);
 
             if (ExhibitsDataGrid.Items.Count == 0)

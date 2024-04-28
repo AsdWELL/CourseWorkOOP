@@ -20,7 +20,7 @@ namespace CourseWork
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("Годов Дмитрий 22ВП1\nТема: Музей");
+            MessageBox.Show("Годов Дмитрий 22ВП1\nТема: Музей");
             _exhibitsWindow = new ExhibitsWindow();
             _exhibitsWindow.Owner = this;
             _visitorsWindow = new VisitorsWindow();
