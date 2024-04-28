@@ -137,10 +137,15 @@ namespace CourseWork
 
         private void CancelSearchBtn_Click(object sender, RoutedEventArgs e)
         {
+            VisitorsDataGrid.Items.SortDescriptions.Clear();
             SearchValueTextBox.Clear();
             VisitorsDataGrid.Items.Filter = null;
         }
 
+        private void ClearSortBtn_Click(object sender, RoutedEventArgs e)
+        {
+            VisitorsDataGrid.ClearSort();
+        }
 
         private void SearchValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

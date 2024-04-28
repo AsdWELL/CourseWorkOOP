@@ -26,7 +26,7 @@ namespace CourseWork
                 VisitorVisitDate.SelectedDate = DateTime.Now;
         }
 
-        public Visitor NewVisitor { get; private set; }
+        public Visitor? NewVisitor { get; private set; } = null;
 
         public bool? ShowDialog(Visitor visitor)
         {

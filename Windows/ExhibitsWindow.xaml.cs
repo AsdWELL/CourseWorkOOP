@@ -142,6 +142,10 @@ namespace CourseWork
             ExhibitsDataGrid.Items.Filter = null;
         }
 
+        private void ClearSortBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ExhibitsDataGrid.ClearSort();
+        }
 
         private void SearchValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

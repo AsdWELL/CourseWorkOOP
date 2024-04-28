@@ -25,7 +25,7 @@ namespace CourseWork
             }
         }
 
-        public Exhibit NewExhibit { get; private set; }
+        public Exhibit? NewExhibit { get; private set; } = null;
 
         public bool? ShowDialog(Exhibit exhibit)
         {
