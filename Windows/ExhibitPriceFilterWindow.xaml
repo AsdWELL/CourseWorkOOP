@@ -1,0 +1,51 @@
+﻿<Window x:Class="CourseWork.Windows.ExhibitPriceFilterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWork.Windows"
+        mc:Ignorable="d"
+        Title="Добавление фильтра" Style="{StaticResource DefaultWindow}" Height="200" Width="350"
+        WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown">
+
+    <Window.Resources>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Width" Value="{Binding Width, ElementName=OperationCombobox}"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Значение цены" Grid.ColumnSpan="2"/>
+
+        <ComboBox x:Name="OperationCombobox" Grid.Column="0" Grid.Row="1" Width="160" Height="35" SelectionChanged="OperationCombobox_SelectionChanged">
+            <ComboBoxItem>
+                <Label Content="Меньше"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Меньше или равно"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Больше"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <Label Content="Больше или равно"/>
+            </ComboBoxItem>
+        </ComboBox>
+
+        <TextBox x:Name="PriceValueTextBox" Grid.Column="1" Grid.Row="1" Width="160" Height="35" Padding="7.5" TextChanged="PriceValueTextBox_TextChanged"/>
+
+        <Button x:Name="CancelBtn" Content="Отмена" Grid.Row="2" Grid.Column="0" Width="160" Height="35" Click="CancelBtn_Click"/>
+        <Button x:Name="AcceptFilterBtn" Content="Применить" Grid.Row="2" Grid.Column="1" Width="160" Height="35" Click="AcceptFilterBtn_Click" IsEnabled="False"/>
+    </Grid>
+</Window>

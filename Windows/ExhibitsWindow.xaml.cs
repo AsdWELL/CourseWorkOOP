@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CourseWork.Windows;
+using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
 using static CourseWork.MainWindow;
@@ -9,7 +10,9 @@ namespace CourseWork
     /// Логика взаимодействия для ExhibitsWindow.xaml
     /// </summary>
     public partial class ExhibitsWindow : Window
-    {        
+    {
+        private Predicate<object>? _searchExhibitsCondition = null;
+        
         public ExhibitsWindow()
         {
             InitializeComponent();
@@ -128,18 +131,22 @@ namespace CourseWork
 
         private void SearchExhibitsBtn_Click(object sender, RoutedEventArgs e)
         {
-            ExhibitsDataGrid.Items.Filter = e =>
+            _searchExhibitsCondition = e =>
             ((Exhibit)e).IsFieldEqulsValue((ExhibitFields)SearchFieldComboBox.SelectedIndex,
                 SearchValueTextBox.Text);
 
+            ExhibitsDataGrid.Items.Filter += _searchExhibitsCondition;
+
             if (ExhibitsDataGrid.Items.Count == 0)
-                MessageBox.Show("Не найдено ни одного посетителя", "Внмиание");
+                MessageBox.Show("Не найдено ни одного экспоната", "Внимание");
         }
 
         private void CancelSearchBtn_Click(object sender, RoutedEventArgs e)
         {
             SearchValueTextBox.Clear();
-            ExhibitsDataGrid.Items.Filter = null;
+
+            ExhibitsDataGrid.Items.Filter -= _searchExhibitsCondition;
+            _searchExhibitsCondition = null;
         }
 
         private void ClearSortBtn_Click(object sender, RoutedEventArgs e)
@@ -150,6 +157,29 @@ namespace CourseWork
         private void SearchValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             SearchExhibitsBtn.IsEnabled = !string.IsNullOrWhiteSpace(SearchValueTextBox.Text);
+        }
+
+        private void AddPriceFilterBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ExhibitPriceFilterWindow filterWindow = new ExhibitPriceFilterWindow();
+            bool? result = filterWindow.ShowDialog();
+            
+            if (result == true)
+            {
+                var filter = ExhibitsDataGrid.Items.Filter;
+
+                ExhibitsDataGrid.Items.Filter = e => (filter?.Invoke(e) ?? true)
+                    && filterWindow.ComparisonValues.Any(value =>
+                        value == ((Exhibit)e).Price.CompareTo(filterWindow.PriceValue));
+
+                if (ExhibitsDataGrid.Items.Count == 0)
+                    MessageBox.Show("Не найдено ни одного экспоната", "Внимание");
+            }
+        }
+
+        private void ClearFiltersBtn_Click(object sender, RoutedEventArgs e)
+        {   
+            ExhibitsDataGrid.Items.Filter = _searchExhibitsCondition;
         }
     }
 }
