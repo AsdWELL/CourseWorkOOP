@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CourseWork.Windows"
         mc:Ignorable="d"
         Title="Добавление фильтра" Style="{StaticResource DefaultWindow}" Height="200" Width="350"
+        FocusManager.FocusedElement="{Binding ElementName=PriceValueTextBox}"
         WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown">
 
     <Window.Resources>

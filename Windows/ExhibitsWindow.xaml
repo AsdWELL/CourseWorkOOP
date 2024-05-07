@@ -34,8 +34,8 @@
                     <MenuItem x:Name="ClearSortBtn" Header="Отменить сортировку" Click="ClearSortBtn_Click"/>
                     <MenuItem x:Name="DeleteSelectedBtn" Header="Удалить выбранных" Click="DeleteSelectedBtn_Click" IsEnabled="False"/>
                     <MenuItem x:Name="DeleteAllExhibits" Header="Удалить всех" Click="DeleteAllExhibits_Click"/>
-                    <MenuItem x:Name="AddPriceFilterBtn" Header="Добавить фильтрацию цены" Click="AddPriceFilterBtn_Click"/>
-                    <MenuItem x:Name="ClearFiltersBtn" Header="Отменить фильтрацию цены" Click="ClearFiltersBtn_Click"/>
+                    <MenuItem x:Name="AddPriceFilterBtn" Header="Добавить фильтр по цене" Click="AddPriceFilterBtn_Click"/>
+                    <MenuItem x:Name="ClearFiltersBtn" Header="Удалить все фильтры" Click="ClearFiltersBtn_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

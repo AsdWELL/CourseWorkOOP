@@ -1,5 +1,6 @@
 ﻿using CourseWork.Windows;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 using System.Windows;
 using System.Windows.Controls;
 using static CourseWork.MainWindow;
@@ -12,10 +13,13 @@ namespace CourseWork
     public partial class ExhibitsWindow : Window
     {
         private Predicate<object>? _searchExhibitsCondition = null;
+        private List<Predicate<object>> _priceFilters;
         
         public ExhibitsWindow()
         {
             InitializeComponent();
+
+            _priceFilters = [];
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -135,7 +139,7 @@ namespace CourseWork
             ((Exhibit)e).IsFieldEqulsValue((ExhibitFields)SearchFieldComboBox.SelectedIndex,
                 SearchValueTextBox.Text);
 
-            ExhibitsDataGrid.Items.Filter += _searchExhibitsCondition;
+            SetFilter();
 
             if (ExhibitsDataGrid.Items.Count == 0)
                 MessageBox.Show("Не найдено ни одного экспоната", "Внимание");
@@ -166,11 +170,10 @@ namespace CourseWork
             
             if (result == true)
             {
-                var filter = ExhibitsDataGrid.Items.Filter;
+                _priceFilters.Add(e => filterWindow.ComparisonValues.Any(value =>
+                        value == ((Exhibit)e).Price.CompareTo(filterWindow.PriceValue)));
 
-                ExhibitsDataGrid.Items.Filter = e => (filter?.Invoke(e) ?? true)
-                    && filterWindow.ComparisonValues.Any(value =>
-                        value == ((Exhibit)e).Price.CompareTo(filterWindow.PriceValue));
+                SetFilter();
 
                 if (ExhibitsDataGrid.Items.Count == 0)
                     MessageBox.Show("Не найдено ни одного экспоната", "Внимание");
@@ -179,7 +182,18 @@ namespace CourseWork
 
         private void ClearFiltersBtn_Click(object sender, RoutedEventArgs e)
         {   
+            _priceFilters.Clear();
             ExhibitsDataGrid.Items.Filter = _searchExhibitsCondition;
+        }
+
+        private void SetFilter()
+        {
+            ExhibitsDataGrid.Items.Filter = e =>
+            {
+                bool isValid = true;
+                _priceFilters.ForEach(filter => isValid = isValid && filter.Invoke(e));
+                return (_searchExhibitsCondition?.Invoke(e) ?? true) && isValid;
+            };
         }
     }
 }
