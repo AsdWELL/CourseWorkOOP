@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
+        Icon="/icons/museum.png"
         Title="Музей" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Style="{StaticResource DefaultWindow}" Closing="Window_Closing">
     <Grid HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="{Binding Width, ElementName=window}" Height="{Binding Height, ElementName=window}">
         <Grid.RowDefinitions>

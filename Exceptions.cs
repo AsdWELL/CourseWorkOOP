@@ -12,7 +12,7 @@
 
     public class InvalidDateException : Exception
     {
-        public InvalidDateException() : base("Некорректная дата") { }
+        public InvalidDateException() : base("Введенная дата не может быть позднее текущей даты") { }
     }
 
     public class NegativePriceException : Exception

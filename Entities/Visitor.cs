@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-
-namespace CourseWork
+﻿namespace CourseWork
 {
     public enum VisitorFields
     {
@@ -72,6 +64,12 @@ namespace CourseWork
             }
         }
 
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="name">Имя посетителя</param>
+        /// <param name="surname">Фамилия посетителя</param>
+        /// <param name="visitDate">Дата посещения музея</param>
         public Visitor(string name, string surname, DateTime visitDate)
         {
             Name = name;
@@ -79,6 +77,12 @@ namespace CourseWork
             VisitDate = visitDate;
         }
 
+        /// <summary>
+        /// Проверяет, значение параметра <paramref name="field"/> равно <paramref name="value"/>
+        /// </summary>
+        /// <param name="field">Параметр экспонат</param>
+        /// <param name="value">Значение параметра</param>
+        /// <returns>True, если равно, иначе False</returns>
         public bool IsFieldEqulsValue(VisitorFields field, string value)
         {
             value = value.ToLower();
@@ -93,12 +97,11 @@ namespace CourseWork
                 VisitorFields.Surname => Surname,
                 VisitorFields.VisitDate => VisitDate.ToString("d")
             };
-            return fieldValue.ToLower().Equals(value);
-        }
 
-        public override string ToString()
-        {
-            return $"Посетитель {Name} {Surname}\nПоследняя дата визита {VisitDate:d}";
+            if (field == VisitorFields.VisitDate)
+                return fieldValue.ToLower().Contains(value);
+
+            return fieldValue.ToLower().Equals(value);
         }
     }
 }

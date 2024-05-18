@@ -1,0 +1,27 @@
+﻿<Window x:Class="CourseWork.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWork.Windows"
+        mc:Ignorable="d"
+        Icon="/icons/museum.png"
+        Title="Информация о приложении" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Style="{StaticResource DefaultWindow}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" TextAlignment="Center">
+            <Run>Студент: Годов Дмитрий</Run>
+            <LineBreak/>
+            <Run>Группа: 22ВП1</Run>
+            <LineBreak/>
+            <Run>Тема: Музей</Run>
+        </TextBlock>
+
+        <Button x:Name="StartBtn" Grid.Row="1" Content="Начать" Click="StartBtn_Click"/>
+    </Grid>
+</Window>

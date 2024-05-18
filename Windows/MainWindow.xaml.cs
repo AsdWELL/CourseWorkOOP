@@ -7,8 +7,8 @@ namespace CourseWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static ExhibitsWindow _exhibitsWindow;
-        private static VisitorsWindow _visitorsWindow;
+        private ExhibitsWindow _exhibitsWindow;
+        private VisitorsWindow _visitorsWindow;
 
         public static MuseumContext _museumContext;
 
@@ -20,25 +20,21 @@ namespace CourseWork
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Годов Дмитрий 22ВП1\nТема: Музей");
+            _museumContext.Database.EnsureCreated();
             _exhibitsWindow = new ExhibitsWindow();
             _exhibitsWindow.Owner = this;
             _visitorsWindow = new VisitorsWindow();
             _visitorsWindow.Owner = this;
-
-            _museumContext.Database.EnsureCreated();
         }
 
         private void ExhibitsBtn_Click(object sender, RoutedEventArgs e)
         {
             _exhibitsWindow.Show();
-            Hide();
         }
 
         private void VisitorsBtn_Click(object sender, RoutedEventArgs e)
         {
             _visitorsWindow.Show();
-            Hide();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

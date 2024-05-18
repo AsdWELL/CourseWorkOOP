@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Markup;
-using System.Xml.Linq;
-
-namespace CourseWork
+﻿namespace CourseWork
 {
     public enum ExhibitFields
     {
         Title,
-        Description,
+        Author,
         Epoch,
         Price,
         Any
     }
     
+    /// <summary>
+    /// Экспонат
+    /// </summary>
     public class Exhibit
     {
         public int Id {  get; set; }
@@ -36,18 +31,18 @@ namespace CourseWork
             }
         }
 
-        private string _description;
+        private string _author;
         /// <summary>
-        /// Описание экспоната
+        /// Автор экспоната
         /// </summary>
-        public string Description
+        public string Author
         {
-            get => _description;
+            get => _author;
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new EmptyArgumentException("Описание экспоната");
-                _description = value;
+                    throw new EmptyArgumentException("Автор");
+                _author = value;
             }
         }
 
@@ -81,14 +76,27 @@ namespace CourseWork
             }
         }
 
-        public Exhibit(string title, string description, string epoch, double price)
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="title">Название экспоната</param>
+        /// <param name="author">Автор экспоната</param>
+        /// <param name="epoch">Эпоха создания</param>
+        /// <param name="price">Цена</param>
+        public Exhibit(string title, string author, string epoch, double price)
         {
             Title = title;
-            Description = description;
+            Author = author;
             Epoch = epoch;
             Price = price;
         }
 
+        /// <summary>
+        /// Проверяет, значение параметра <paramref name="field"/> равно <paramref name="value"/>
+        /// </summary>
+        /// <param name="field">Параметр экспонат</param>
+        /// <param name="value">Значение параметра</param>
+        /// <returns>True, если равно, иначе False</returns>
         public bool IsFieldEqulsValue(ExhibitFields field, string value)
         {
             value = value.ToLower();
@@ -98,26 +106,18 @@ namespace CourseWork
 
             if (field == ExhibitFields.Any)
                 return Title.ToLower().Contains(value) ||
-                    Description.ToLower().Contains(value) ||
+                    Author.ToLower().Contains(value) ||
                     Epoch.ToLower().Contains(value) ||
                     Price.ToString().Equals(value);
 
             string fieldValue = field switch
             {
                 ExhibitFields.Title => Title,
-                ExhibitFields.Description => Description,
+                ExhibitFields.Author => Author,
                 ExhibitFields.Epoch => Epoch,
             };
 
-            return fieldValue.ToLower().Contains(value);
-        }
-
-        public override string ToString()
-        {
-            return $"Экспонат {Title}\n" +
-                $"Описание экспоната: {Description}\n" +
-                $"Эпоха экспоната: {Epoch}\n" +
-                $"Стоимость экспоната: {Price} руб.";
+            return fieldValue.ToLower().Equals(value);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static CourseWork.MainWindow;
 
 namespace CourseWork
 {
@@ -20,13 +21,21 @@ namespace CourseWork
             {
                 ExhibitTitleTextBox.Text = NewExhibit.Title;
                 ExhibitEpochTextBox.Text = NewExhibit.Epoch;
-                ExhibitDescriptionTextBox.Text = NewExhibit.Description;
+                ExhibitAuthorTextBox.Text = NewExhibit.Author;
                 ExhibitPriceTextBox.Text = NewExhibit.Price.ToString();
             }
         }
 
+        /// <summary>
+        /// Новый экспонат, с параметрами, указанными пользователем
+        /// </summary>
         public Exhibit? NewExhibit { get; private set; } = null;
 
+        /// <summary>
+        /// Открывает окно для редактирования экспоната
+        /// </summary>
+        /// <param name="exhibit">Редактируемый экспонат</param>
+        /// <returns>True, если пользователь сохранил изменения, иначе False</returns>
         public bool? ShowDialog(Exhibit exhibit)
         {
             Title = "Редактирование экспоната";
@@ -34,11 +43,21 @@ namespace CourseWork
             return ShowDialog();
         }
 
+        /// <summary>
+        /// Отменяет измненения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
         }
 
+        /// <summary>
+        /// Сохраняет изменения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveExhibitBtn_Click(object sender, RoutedEventArgs e)
         {
             double price;
@@ -53,12 +72,20 @@ namespace CourseWork
                 return;
             }
 
+            if (_museumContext.Exhibits.ToList().Any(exhibit =>
+                exhibit.Title != NewExhibit?.Title &&
+                exhibit.Title.ToLower().Equals(ExhibitTitleTextBox.Text.Trim().ToLower())))
+            {
+                MessageBox.Show("Экспонат с таким названием уже есть в базе данных", "Внимание");
+                return;
+            }
+
             try
             {
-                NewExhibit = new Exhibit(ExhibitTitleTextBox.Text,
-                ExhibitDescriptionTextBox.Text,
-                ExhibitEpochTextBox.Text,
-                price);
+                NewExhibit = new Exhibit(ExhibitTitleTextBox.Text.Trim(),
+                    ExhibitAuthorTextBox.Text.Trim(),
+                    ExhibitEpochTextBox.Text.Trim(),
+                    price);
             }
             catch (Exception ex)
             {
@@ -69,17 +96,29 @@ namespace CourseWork
             DialogResult = true;
         }
 
-        private void CheckInput(object sender, TextChangedEventArgs e)
+        /// <summary>
+        /// Проверяет, что все поля на форме не пустые
+        /// Если хотя бы одно поле пустое блокирует возможность сохранения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckFieldsNotEmpty(object sender, TextChangedEventArgs e)
         {
             SaveExhibitBtn.IsEnabled = !string.IsNullOrWhiteSpace(ExhibitTitleTextBox.Text)
                 && !string.IsNullOrWhiteSpace(ExhibitEpochTextBox.Text)
-                && !string.IsNullOrWhiteSpace(ExhibitDescriptionTextBox.Text)
+                && !string.IsNullOrWhiteSpace(ExhibitAuthorTextBox.Text)
                 && !string.IsNullOrWhiteSpace(ExhibitPriceTextBox.Text);
         }
 
+        /// <summary>
+        /// Позволяет управлять окном с клавиатуры: 
+        /// Enter - сохранить, Escape - отменить
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Enter && SaveExhibitBtn.IsEnabled)
                 SaveExhibitBtn_Click(sender, e);
             else if (e.Key == Key.Escape)
                 CancelBtn_Click(sender, e);

@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
+        Icon="/icons/exhibit.png"
         Title="Новый экспонат" Style="{StaticResource DefaultWindow}" Width="300" Height="300"
         WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" KeyDown="Window_KeyDown"
-        FocusManager.FocusedElement="{Binding ElementName=ExhibitTitleTextBox}">
+        FocusManager.FocusedElement="{Binding ElementName=ExhibitTitleTextBox}" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -22,13 +23,13 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Content="Название" Grid.Row="0" Grid.Column="0"/>
-        <TextBox x:Name="ExhibitTitleTextBox" Grid.Column="1" Grid.Row="0" Width="130" TextChanged="CheckInput"/>
-        <Label Content="Описание" Grid.Row="1" Grid.Column="0"/>
-        <TextBox x:Name="ExhibitDescriptionTextBox" Grid.Row="1" Grid.Column="1" Width="130" TextChanged="CheckInput"/>
+        <TextBox x:Name="ExhibitTitleTextBox" Grid.Column="1" Grid.Row="0" Width="130" TextChanged="CheckFieldsNotEmpty"/>
+        <Label Content="Автор" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="ExhibitAuthorTextBox" Grid.Row="1" Grid.Column="1" Width="130" TextChanged="CheckFieldsNotEmpty"/>
         <Label Content="Эпоха" Grid.Row="2" Grid.Column="0"/>
-        <TextBox x:Name="ExhibitEpochTextBox" Grid.Row="2" Grid.Column="1" Width="130" TextChanged="CheckInput"/>
+        <TextBox x:Name="ExhibitEpochTextBox" Grid.Row="2" Grid.Column="1" Width="130" TextChanged="CheckFieldsNotEmpty"/>
         <Label Content="Цена" Grid.Row="3" Grid.Column="0"/>
-        <TextBox x:Name="ExhibitPriceTextBox" Grid.Row="3" Grid.Column="1" Width="130" TextChanged="CheckInput"/>
+        <TextBox x:Name="ExhibitPriceTextBox" Grid.Row="3" Grid.Column="1" Width="130" TextChanged="CheckFieldsNotEmpty"/>
         <Button x:Name="CancelBtn" Content="Отмена" Grid.Row="4" Grid.Column="0" Width="120" Height="30" Click="CancelBtn_Click"/>
         <Button x:Name="SaveExhibitBtn" Content="Сохранить" Grid.Row="4" Grid.Column="1" Width="120" Height="30" Click="SaveExhibitBtn_Click" IsEnabled="False"/>
     </Grid>

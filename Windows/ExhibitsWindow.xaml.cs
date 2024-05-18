@@ -1,8 +1,8 @@
 ﻿using CourseWork.Windows;
 using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml;
 using static CourseWork.MainWindow;
 
 namespace CourseWork
@@ -25,20 +25,14 @@ namespace CourseWork
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _museumContext.Exhibits.Load();
+
+            DataContext = _museumContext.Exhibits;
+
             ExhibitsDataGrid.ItemsSource = _museumContext.Exhibits.Local.ToObservableCollection();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            try
-            {
-                Owner.Show();
-            }
-            catch (InvalidOperationException)
-            {
-                return;
-            }
-
             e.Cancel = true;
             Hide();
         }
@@ -96,7 +90,7 @@ namespace CourseWork
                 }
 
                 exhibit.Title = exhibitWindow.NewExhibit.Title;
-                exhibit.Description = exhibitWindow.NewExhibit.Description;
+                exhibit.Author = exhibitWindow.NewExhibit.Author;
                 exhibit.Epoch = exhibitWindow.NewExhibit.Epoch;
                 exhibit.Price = exhibitWindow.NewExhibit.Price;
 
@@ -130,7 +124,9 @@ namespace CourseWork
 
         private void DeleteAllExhibits_Click(object sender, RoutedEventArgs e)
         {
-            _museumContext.Exhibits.ExecuteDelete();
+            _museumContext.Exhibits.RemoveRange(_museumContext.Exhibits.ToList());
+
+            _museumContext.SaveChanges();
         }
 
         private void SearchExhibitsBtn_Click(object sender, RoutedEventArgs e)
@@ -140,17 +136,15 @@ namespace CourseWork
                 SearchValueTextBox.Text);
 
             SetFilter();
-
-            if (ExhibitsDataGrid.Items.Count == 0)
-                MessageBox.Show("Не найдено ни одного экспоната", "Внимание");
         }
 
         private void CancelSearchBtn_Click(object sender, RoutedEventArgs e)
         {
             SearchValueTextBox.Clear();
 
-            ExhibitsDataGrid.Items.Filter -= _searchExhibitsCondition;
             _searchExhibitsCondition = null;
+
+            SetFilter();
         }
 
         private void ClearSortBtn_Click(object sender, RoutedEventArgs e)
@@ -174,9 +168,6 @@ namespace CourseWork
                         value == ((Exhibit)e).Price.CompareTo(filterWindow.PriceValue)));
 
                 SetFilter();
-
-                if (ExhibitsDataGrid.Items.Count == 0)
-                    MessageBox.Show("Не найдено ни одного экспоната", "Внимание");
             }
         }
 
@@ -188,6 +179,12 @@ namespace CourseWork
 
         private void SetFilter()
         {
+            if (_priceFilters.Count == 0 && _searchExhibitsCondition == null)
+            {
+                ExhibitsDataGrid.Items.Filter = null;
+                return;
+            }
+            
             ExhibitsDataGrid.Items.Filter = e =>
             {
                 bool isValid = true;
